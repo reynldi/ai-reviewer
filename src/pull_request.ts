@@ -294,7 +294,7 @@ function shouldIgnorePullRequest(pull_request: { body?: string }) {
     "@presubmitai skip",
     "@presubmitai: skip",
   ];
-  const bodyLower = pull_request.body?.toLowerCase();
+  const bodyLower = (pull_request.body ?? "").toLowerCase();
 
   for (const phrase of ignorePhrases) {
     if (bodyLower?.includes(phrase.toLowerCase())) {
