@@ -33,6 +33,10 @@ export async function handlePullRequest() {
 
   const octokit = initOctokit(config.githubToken);
 
+  if (shouldIgnorePullRequest(pull_request)) {
+    return;
+  }
+
   // Get commit messages
   const { data: commits } = await octokit.rest.pulls.listCommits({
     ...context.repo,
@@ -301,4 +305,26 @@ async function submitReview(
       )
     );
   }
+}
+
+function shouldIgnorePullRequest(pull_request: { body?: string }) {
+  const ignorePhrases = [
+    "@presubmit ignore",
+    "@presubmit: ignore",
+    "@presubmit skip",
+    "@presubmit: skip",
+    "@presubmitai ignore",
+    "@presubmitai: ignore",
+    "@presubmitai skip",
+    "@presubmitai: skip",
+  ];
+  const bodyLower = (pull_request.body ?? "").toLowerCase();
+
+  for (const phrase of ignorePhrases) {
+    if (bodyLower.includes(phrase.toLowerCase())) {
+      info(`ignoring pull request because of '${phrase}' in description`);
+      return true;
+    }
+  }
+  return false;
 }
