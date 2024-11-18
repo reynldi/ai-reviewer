@@ -206,7 +206,7 @@ function formatDiffHunk(hunk: Hunk): string {
   }
 
   if (hunk.commentChains?.length) {
-    output += `__comment_chain__\n${hunk.commentChains
+    output += `__existing_comment_thread__\n${hunk.commentChains
       .map((c) =>
         c.comments.map((c) => `@${c.user.login}: ${c.body}`).join("\n")
       )
