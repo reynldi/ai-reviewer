@@ -297,7 +297,7 @@ function shouldIgnorePullRequest(pull_request: { body?: string }) {
   const bodyLower = (pull_request.body ?? "").toLowerCase();
 
   for (const phrase of ignorePhrases) {
-    if (bodyLower?.includes(phrase.toLowerCase())) {
+    if (bodyLower.includes(phrase.toLowerCase())) {
       info(`ignoring pull request because of '${phrase}' in description`);
       return true;
     }
