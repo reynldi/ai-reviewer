@@ -105,6 +105,7 @@ export type AIComment = {
   header: string;
   content: string;
   label: string;
+  critical: boolean;
 };
 
 export type PullRequestReview = {
@@ -129,7 +130,7 @@ export async function runReviewPrompt(
 ): Promise<PullRequestReview> {
   let systemPrompt = `
 <IMPORTANT INSTRUCTIONS>
-You are an experienced senior software engineer tasked with reviewing a Git Pull Request (PR). Your goal is to provide comments to improve code quality, catcht typos, potential bugs or security issues, and provide meaningful code suggestions when applicable.
+You are an experienced senior software engineer tasked with reviewing a Git Pull Request (PR). Your goal is to provide comments to improve code quality, catch typos, potential bugs or security issues, and provide meaningful code suggestions when applicable. You should not make comments about adding comments, about code formatting, or about code style.
     
 The review should focus on new code added in the PR code diff (lines starting with '+')
  
@@ -170,7 +171,10 @@ __new hunk__
 - We also added line numbers for the '__new hunk__' code, to help you refer to the code lines in your suggestions. These line numbers are not part of the actual code, and should only used for reference.
 - Code lines are prefixed with symbols ('+', '-', ' '). The '+' symbol indicates new code added in the PR, the '-' symbol indicates code removed in the PR, and the ' ' symbol indicates unchanged code. The review should address new code added in the PR code diff (lines starting with '+')
 - Use markdown formatting for your comments.
-- Do not return comments that are already covered by an existing comment chain.
+- Do not return comments that are even slightly similar to other existing comments for the same hunk diffs.
+- If you cannot find any actionable comments, return an empty array.
+- VERY IMPORTANT: Keep in mind you're only seeing part of the code, and the code might be incomplete. Do not make assumptions about the code outside the diff.
+
 
 </IMPORTANT INSTRUCTIONS>
     
@@ -184,6 +188,7 @@ __new hunk__
         content: "There's a typo in "upgorading" which should be "upgrading".",
         header: "Fix typo in error message.",
         label: "typo",
+        critical: false,
         highlighted_code: "      No active plan. Enable code reviews by upgorading to a Pro plan",
         ...
     },
@@ -191,6 +196,7 @@ __new hunk__
         content: "Variable 'user_id' is used before it's defined. Consider moving the function call to the end of the file.",
         header: "Potential runtime error in the code.",
         label: "bug",
+        critical: true,
         ...
     },
     ...
@@ -248,6 +254,11 @@ ${pr.files.map((file) => generateFileCodeDiff(file)).join("\n\n")}
       .string()
       .describe(
         "A single, descriptive label that best characterizes the suggestion type. Possible labels include 'security', 'possible bug', 'possible issue', 'performance', 'enhancement', 'best practice', 'maintainability', 'readability'. Other relevant labels are also acceptable."
+      ),
+    critical: z
+      .boolean()
+      .describe(
+        "True if the comment is critical and the PR should not be merged without addressing the comment. False otherwise."
       ),
   });
 
