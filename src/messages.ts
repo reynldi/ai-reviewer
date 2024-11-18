@@ -122,7 +122,7 @@ export function buildReviewSummary(
   const { owner, repo } = context.repo;
 
   let body = "";
-  if (actionableComments.length == 0) {
+  if (actionableComments.length === 0) {
     body += `✅ **LGTM!**\n\n`;
   } else {
     body += `🚨 **Pull request needs attention.**\n\n`;
@@ -156,7 +156,7 @@ export function buildReviewSummary(
   }
   body += "\n</details>\n\n";
 
-  // Comments section
+  // Actionable comments section
   body += `<details>\n<summary>Actionable Comments (${actionableComments.length})</summary>\n\n`;
   for (const comment of actionableComments) {
     body += `- <details>\n`;
@@ -166,7 +166,7 @@ export function buildReviewSummary(
   }
   body += "\n</details>\n\n";
 
-  // Comments section
+  // Skipped comments section
   body += `<details>\n<summary>Skipped Comments (${skippedComments.length})</summary>\n\n`;
   for (const comment of skippedComments) {
     body += `- <details>\n`;

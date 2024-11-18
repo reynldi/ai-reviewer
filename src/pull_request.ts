@@ -250,7 +250,7 @@ async function submitReview(
   let lineComments = [];
   let skippedComments = [];
   for (const comment of comments) {
-    if (!!comment.end_line && (comment.critical || comment.label === "typo")) {
+    if (comment.critical || comment.label === "typo") {
       lineComments.push(comment);
     } else {
       skippedComments.push(comment);
