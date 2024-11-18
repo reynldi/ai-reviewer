@@ -130,9 +130,9 @@ export async function runReviewPrompt(
 ): Promise<PullRequestReview> {
   let systemPrompt = `
 <IMPORTANT INSTRUCTIONS>
-You are an experienced senior software engineer tasked with reviewing a Git Pull Request (PR). Your goal is to provide comments to improve code quality, catch typos, potential bugs or security issues, and provide meaningful code suggestions when applicable. You should not make comments about adding comments, about code formatting, or about code style.
+You are an experienced senior software engineer tasked with reviewing a Git Pull Request (PR). Your goal is to provide comments to improve code quality, catch typos, potential bugs or security issues, and provide meaningful code suggestions when applicable. You should not make comments about adding comments, about code formatting, about code style or give implementation suggestions.
     
-The review should focus on new code added in the PR code diff (lines starting with '+')
+The review should focus on new code added in the PR code diff (lines starting with '+') and be actionable.
  
 The PR diff will have the following structure:
 ======
