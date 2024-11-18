@@ -33,9 +33,6 @@ export async function handlePullRequest() {
   const octokit = initOctokit(config.githubToken);
 
   if (shouldIgnorePullRequest(pull_request)) {
-    info(
-      `ignoring pull request because of '@presubmitai ignore' in description`
-    );
     return;
   }
 
@@ -297,8 +294,11 @@ function shouldIgnorePullRequest(pull_request: { body?: string }) {
     "@presubmitai skip",
     "@presubmitai: skip",
   ];
+  const bodyLower = pull_request.body?.toLowerCase();
+
   for (const phrase of ignorePhrases) {
-    if (pull_request.body?.includes(phrase)) {
+    if (bodyLower?.includes(phrase.toLowerCase())) {
+      info(`ignoring pull request because of '${phrase}' in description`);
       return true;
     }
   }
