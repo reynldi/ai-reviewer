@@ -5,12 +5,13 @@ import { loadContext } from "./context";
 import runSummaryPrompt, { AIComment, runReviewPrompt } from "./prompts";
 import {
   buildLoadingMessage,
+  buildReviewSummary,
   buildWalkthroughMessage,
   OVERVIEW_MESSAGE_SIGNATURE,
   PAYLOAD_TAG_CLOSE,
   PAYLOAD_TAG_OPEN,
 } from "./messages";
-import { parseFileDiff } from "./diff";
+import { FileDiff, parseFileDiff } from "./diff";
 import { Octokit } from "@octokit/action";
 import { Context } from "@actions/github/lib/context";
 
@@ -197,7 +198,9 @@ export async function handlePullRequest() {
       number: pull_request.number,
       headSha: pull_request.head.sha,
     },
-    comments
+    comments,
+    commitsToReview,
+    filesToReview
   );
   info(`posted review comments`);
 }
@@ -209,7 +212,14 @@ async function submitReview(
     number: number;
     headSha: string;
   },
-  comments: AIComment[]
+  comments: AIComment[],
+  commits: {
+    sha: string;
+    commit: {
+      message: string;
+    };
+  }[],
+  files: FileDiff[]
 ) {
   const submitInlineComment = async (
     file: string,
@@ -241,7 +251,15 @@ async function submitReview(
   }
 
   // Handle line comments
-  const lineComments = comments.filter((c) => !!c.end_line);
+  let lineComments = [];
+  let skippedComments = [];
+  for (const comment of comments) {
+    if (comment.critical || comment.label === "typo") {
+      lineComments.push(comment);
+    } else {
+      skippedComments.push(comment);
+    }
+  }
 
   // Try to submit all comments at once
   try {
@@ -268,7 +286,13 @@ async function submitReview(
       pull_number: pull_request.number,
       review_id: review.data.id,
       event: "COMMENT",
-      body: "Review complete",
+      body: buildReviewSummary(
+        context,
+        files,
+        commits,
+        lineComments,
+        skippedComments
+      ),
     });
   } catch (error) {
     warning(`error submitting review: ${error}`);
