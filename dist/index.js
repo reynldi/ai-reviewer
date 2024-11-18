@@ -209,9 +209,9 @@ ${e.files.map(o=>iP(o)).join(`
 Make sure each affected file is summarized and it's part of the returned JSON.
 `,r=E.object({filename:E.string().describe("The full file path of the relevant file"),summary:E.string().describe("Concise summary of the file changes in markdown format (max 70 words)"),title:E.string().describe("An informative title for the changes in this file, describing its main theme (5-10 words).")}),s=E.object({title:E.string().describe("Informative title of the PR, describing its main theme (10 words max)"),description:E.string().describe("Informative description of the PR, describing its main theme"),files:E.array(r).describe("List of files affected in the PR and summaries of their changes"),type:E.array(E.enum(["BUG","TESTS","ENHANCEMENT","DOCUMENTATION","OTHER"])).describe("One or more types that describe this PR's main theme.")});return await Zw({prompt:A,systemPrompt:t,schema:s})}async function cP(e){let t=`
 <IMPORTANT INSTRUCTIONS>
-You are an experienced senior software engineer tasked with reviewing a Git Pull Request (PR). Your goal is to provide comments to improve code quality, catch typos, potential bugs or security issues, and provide meaningful code suggestions when applicable. You should not make comments about adding comments, about code formatting, or about code style.
+You are an experienced senior software engineer tasked with reviewing a Git Pull Request (PR). Your goal is to provide comments to improve code quality, catch typos, potential bugs or security issues, and provide meaningful code suggestions when applicable. You should not make comments about adding comments, about code formatting, about code style or give implementation suggestions.
     
-The review should focus on new code added in the PR code diff (lines starting with '+')
+The review should focus on new code added in the PR code diff (lines starting with '+') and be actionable.
  
 The PR diff will have the following structure:
 ======
