@@ -32,6 +32,13 @@ export async function handlePullRequest() {
 
   const octokit = initOctokit(config.githubToken);
 
+  if (shouldIgnorePullRequest(pull_request)) {
+    info(
+      `ignoring pull request because of '@presubmitai ignore' in description`
+    );
+    return;
+  }
+
   // Get commit messages
   const { data: commits } = await octokit.rest.pulls.listCommits({
     ...context.repo,
@@ -277,4 +284,23 @@ async function submitReview(
       )
     );
   }
+}
+
+function shouldIgnorePullRequest(pull_request: { body?: string }) {
+  const ignorePhrases = [
+    "@presubmit ignore",
+    "@presubmit: ignore",
+    "@presubmit skip",
+    "@presubmit: skip",
+    "@presubmitai ignore",
+    "@presubmitai: ignore",
+    "@presubmitai skip",
+    "@presubmitai: skip",
+  ];
+  for (const phrase of ignorePhrases) {
+    if (pull_request.body?.includes(phrase)) {
+      return true;
+    }
+  }
+  return false;
 }
