@@ -86,7 +86,16 @@ Make sure each affected file is summarized and it's part of the returned JSON.
         "List of files affected in the PR and summaries of their changes"
       ),
     type: z
-      .array(z.enum(["BUG", "TESTS", "ENHANCEMENT", "DOCUMENTATION", "OTHER"]))
+      .array(
+        z.enum([
+          "BUG",
+          "TESTS",
+          "ENHANCEMENT",
+          "DOCUMENTATION",
+          "SECURITY",
+          "OTHER",
+        ])
+      )
       .describe("One or more types that describe this PR's main theme."),
   });
 
