@@ -6,7 +6,7 @@ import runSummaryPrompt, { AIComment, runReviewPrompt } from "./prompts";
 import {
   buildLoadingMessage,
   buildReviewSummary,
-  buildWalkthroughMessage,
+  buildOverviewMessage,
   OVERVIEW_MESSAGE_SIGNATURE,
   PAYLOAD_TAG_CLOSE,
   PAYLOAD_TAG_OPEN,
@@ -167,11 +167,11 @@ export async function handlePullRequest() {
     });
   }
 
-  // Update overview comment with the walkthrough
+  // Update overview comment with the PR overview
   await octokit.rest.issues.updateComment({
     ...context.repo,
     comment_id: overviewComment.id,
-    body: buildWalkthroughMessage(
+    body: buildOverviewMessage(
       summary,
       commits.map((c) => c.sha)
     ),

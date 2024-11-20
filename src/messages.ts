@@ -71,16 +71,16 @@ export function buildLoadingMessage(
   return message;
 }
 
-export function buildWalkthroughMessage(
+export function buildOverviewMessage(
   summary: PullRequestSummary,
   commits: string[]
 ): string {
-  let message = `# 📖 Walkthrough\n\n`;
+  let message = `## PR Summary\n\n`;
 
   // Add description with proper spacing
   message += `${summary.description.trim()}\n\n`;
 
-  message += `## Changes\n\n`;
+  message += `### Changes\n\n`;
 
   // Create table with proper column alignment and escaping
   message += `| File | Summary |\n`;
