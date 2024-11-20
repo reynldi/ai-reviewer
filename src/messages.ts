@@ -6,6 +6,8 @@ import { Context } from "@actions/github/lib/context";
 export const OVERVIEW_MESSAGE_SIGNATURE =
   "\n<!-- presubmit.ai: overview message -->";
 
+export const COMMENT_SIGNATURE = "\n<!-- presubmit.ai: comment -->";
+
 export const PAYLOAD_TAG_OPEN = "\n<!-- presubmit.ai: payload --";
 export const PAYLOAD_TAG_CLOSE = "\n-- presubmit.ai: payload -->";
 
