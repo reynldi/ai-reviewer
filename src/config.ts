@@ -14,7 +14,6 @@ export class Config {
       console.log("[debug] skip loading inputs");
       return;
     }
-    this.llmModel = getInput("llm_model");
   }
 }
 
