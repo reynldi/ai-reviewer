@@ -78,7 +78,7 @@ function generateCommentThreads(
   reviewComments: ReviewComment[]
 ): ReviewCommentThread[] {
   const topLevelComments = reviewComments.filter(
-    (c) => !c.in_reply_to_id && c.body.length && c.line
+    (c) => !c.in_reply_to_id && c.body.length && !!c.line
   );
 
   return topLevelComments.map((topLevelComment) => {
