@@ -2,7 +2,7 @@ import { info, warning } from "@actions/core";
 import { loadContext } from "./context";
 import config from "./config";
 import { initOctokit } from "./octokit";
-import { getCommentThread, isOwnComment } from "./comments";
+import { getCommentThread, isOwnComment, isThreadRelevant } from "./comments";
 import { parseFileDiff } from "./diff";
 import { runReviewCommentPrompt } from "./prompts";
 
@@ -41,6 +41,12 @@ export async function handlePullRequestComment() {
   });
   if (!commentThread) {
     warning("comment thread not found");
+    return;
+  }
+
+  // Check if the comment thread is relevant
+  if (!isThreadRelevant(commentThread)) {
+    info("comment thread is not relevant, ignoring it");
     return;
   }
 

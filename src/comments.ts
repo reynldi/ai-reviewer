@@ -63,9 +63,7 @@ export async function getCommentThread(
   );
 }
 
-export async function isThreadRelevant(
-  thread: ReviewCommentThread
-): Promise<boolean> {
+export function isThreadRelevant(thread: ReviewCommentThread): boolean {
   return thread.comments.some(
     (c) =>
       c.body.includes(COMMENT_SIGNATURE) ||
