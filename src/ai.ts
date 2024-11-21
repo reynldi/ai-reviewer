@@ -46,7 +46,7 @@ export async function runPrompt({
     throw new Error(`Unknown LLM model: ${config.llmModel}`);
   }
 
-  const llm = model.createAi({ apiKey: process.env.LLM_API_KEY });
+  const llm = model.createAi({ apiKey: config.llmApiKey });
   const { object, usage } = await generateObject({
     model: llm(model.name),
     prompt,
