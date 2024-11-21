@@ -34,6 +34,8 @@ export async function runSummaryPrompt(
 - When quoting variables or names from the code, use backticks (\`).
 - Return a summary for each single affected file or if there is nothing to summarize simply use the status of the change (ie. "New file").
 - Start the overview with a verb at past tense like "Started", "Commented", "Generated" etc...
+
+IMPORTANT: Do not make assumptions about the code outside the diff. Do not assume variable could be optional if you don't see the type declaration. Do not suggest null checks unless you are sure this could lead to a runtime error.
 \n`;
 
   let userPrompt = `
