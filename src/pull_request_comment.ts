@@ -60,25 +60,27 @@ export async function handlePullRequestComment() {
     return;
   }
 
+  // Run prompt
   const response = await runReviewCommentPrompt({
     commentThread,
     commentFileDiff,
   });
 
-  if (response.action_requested && response.response_comment.length) {
-    info("action requested, submitting response");
-
-    await octokit.pulls.createReviewComment({
-      ...context.repo,
-      pull_number: pull_request.number,
-      commit_id: pull_request.headSha,
-      path: commentThread.file,
-      body: response.response_comment,
-      in_reply_to: commentThread.comments[0].id,
-    });
-  } else {
+  // Submit response if action requested
+  if (!response.action_requested || !response.response_comment.length) {
     info(
       "comment doesn't seem to require any action, so not submitting a response"
     );
+    return;
   }
+
+  info("action requested, submitting response");
+  await octokit.pulls.createReviewComment({
+    ...context.repo,
+    pull_number: pull_request.number,
+    commit_id: pull_request.headSha,
+    path: commentThread.file,
+    body: response.response_comment,
+    in_reply_to: commentThread.comments[0].id,
+  });
 }
