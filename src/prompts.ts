@@ -1,6 +1,7 @@
 import { runPrompt } from "./ai";
 import { z } from "zod";
 import { formatFileDiff, File, FileDiff, generateFileCodeDiff } from "./diff";
+import { ReviewCommentThread } from "./comments";
 
 type PullRequestSummaryPrompt = {
   prTitle: string;
@@ -20,7 +21,7 @@ export type PullRequestSummary = {
   type: string[];
 };
 
-export default async function runSummaryPrompt(
+export async function runSummaryPrompt(
   pr: PullRequestSummaryPrompt
 ): Promise<PullRequestSummary> {
   let systemPrompt = `You are a helpful assistant that summarizes Git Pull Requests (PRs).`;
@@ -312,4 +313,76 @@ ${pr.files.map((file) => generateFileCodeDiff(file)).join("\n\n")}
     systemPrompt,
     schema,
   })) as PullRequestReview;
+}
+
+type ReviewCommentPrompt = {
+  commentThread: ReviewCommentThread;
+  commentFileDiff: FileDiff;
+};
+
+export type ReviewCommentResponse = {
+  response_comment: string;
+  action_requested: boolean;
+};
+
+export async function runReviewCommentPrompt({
+  commentThread,
+  commentFileDiff,
+}: ReviewCommentPrompt): Promise<ReviewCommentResponse> {
+  let systemPrompt = `You are a helpful senior software engineer that reviews comments on Git Pull Requests (PRs). Your task is to provide a response to a comment on a PR review. The comment might be part of a longer comment thread, so make sure to respond to the specific comment and not the whole thread.
+
+The comment thread is specific to a line or multiple lines of code in a specific file. Keep that in mind when writing your response, but do not assume the code is complete or correct. Also, the comment might request you to suggest some changes or improvements outside the code snippet, so judge accordingly.
+
+In your response, return the exact text of your comment, in markdown, starting by mentioning the @user who made the comment. Your response will be used as a comment on the PR, so make sure it's easy to understand and actionable.
+
+Comments from @presubmit are yours.
+
+IMPORTANT: Do not respond with generic comments like "Thanks for the PR!" or "LGTM" or "Let me know if you need any help". If the input comment is not actionable, return an empty string. Do not offer to help unless asked.
+`;
+
+  const startLine =
+    commentThread.comments[0].start_line || commentThread.comments[0].line;
+  const endLine = commentThread.comments[0].line;
+
+  let userPrompt = `
+Below you'll see the full comment thread, but you should focus specifically on the last comment.
+<Comment Thread>
+${commentThread.comments
+  .map(
+    (comment) =>
+      `<author>@${comment.user.login}</author>\n<comment>${comment.body}</comment>`
+  )
+  .join("\n")}
+</Comment Thread>
+
+<Comment Scope>
+  <Lines>${startLine} - ${endLine}</Lines>
+  <Hunk>
+    ${commentThread.comments[0].diff_hunk}
+  </Hunk>
+</Comment Scope>
+
+<Comment File Diff>
+${generateFileCodeDiff(commentFileDiff)}
+</Comment File Diff>
+`;
+
+  const schema = z.object({
+    response_comment: z
+      .string()
+      .describe(
+        "Your response to the comment in markdown format, starting by mentioning the user"
+      ),
+    action_requested: z
+      .boolean()
+      .describe(
+        "True if the input comment required an action from you. False otherwise."
+      ),
+  });
+
+  return (await runPrompt({
+    prompt: userPrompt,
+    systemPrompt,
+    schema,
+  })) as ReviewCommentResponse;
 }
