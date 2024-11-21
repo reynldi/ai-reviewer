@@ -1,5 +1,3 @@
-import { getInput } from "@actions/core";
-
 export class Config {
   public llmApiKey: string | undefined;
   public llmModel: string | undefined;
@@ -27,6 +25,8 @@ export class Config {
       console.log("[debug] skip loading inputs");
       return;
     }
+
+    // TODO: handle inputs
   }
 }
 
