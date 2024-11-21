@@ -84,7 +84,7 @@ export async function handlePullRequestComment() {
   await octokit.pulls.createReviewComment({
     ...context.repo,
     pull_number: pull_request.number,
-    commit_id: pull_request.headSha,
+    commit_id: pull_request.head.sha,
     path: commentThread.file,
     body: response.response_comment,
     in_reply_to: commentThread.comments[0].id,
