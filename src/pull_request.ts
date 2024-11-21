@@ -2,7 +2,7 @@ import { info, warning } from "@actions/core";
 import config from "./config";
 import { initOctokit } from "./octokit";
 import { loadContext } from "./context";
-import runSummaryPrompt, { AIComment, runReviewPrompt } from "./prompts";
+import { runSummaryPrompt, AIComment, runReviewPrompt } from "./prompts";
 import {
   buildLoadingMessage,
   buildReviewSummary,
@@ -14,6 +14,7 @@ import {
 import { FileDiff, parseFileDiff } from "./diff";
 import { Octokit } from "@octokit/action";
 import { Context } from "@actions/github/lib/context";
+import { listPullRequestCommentThreads } from "./comments";
 
 export async function handlePullRequest() {
   const context = await loadContext();
@@ -55,13 +56,11 @@ export async function handlePullRequest() {
   const isIncrementalReview = !!overviewComment;
 
   // Maybe fetch review comments
-  const reviewComments = isIncrementalReview
-    ? (
-        await octokit.rest.pulls.listReviewComments({
-          ...context.repo,
-          pull_number: pull_request.number,
-        })
-      ).data
+  const reviewCommentThreads = isIncrementalReview
+    ? await listPullRequestCommentThreads(octokit, {
+        ...context.repo,
+        pull_number: pull_request.number,
+      })
     : [];
 
   // Get modified files
@@ -69,7 +68,9 @@ export async function handlePullRequest() {
     ...context.repo,
     pull_number: pull_request.number,
   });
-  let filesToReview = files.map((file) => parseFileDiff(file, reviewComments));
+  let filesToReview = files.map((file) =>
+    parseFileDiff(file, reviewCommentThreads)
+  );
   info(`successfully fetched file diffs`);
 
   let commitsReviewed: string[] = [];
@@ -186,8 +187,6 @@ export async function handlePullRequest() {
     prDescription: pull_request.body || "",
     prSummary: summary.description,
   });
-  console.log("Review: ", review.review);
-  console.log("Comments: ", review.comments);
   info(`reviewed pull request`);
 
   // Post review comments

@@ -22,6 +22,17 @@ async function loadDebugContext(): Promise<Context> {
     pull_number: parseInt(process.env.GITHUB_PULL_REQUEST || "1"),
   });
 
+  const commentId = process.env.GITHUB_COMMENT_ID;
+  let comment: any;
+  if (commentId) {
+    const { data } = await octokit.rest.pulls.getReviewComment({
+      owner,
+      repo,
+      comment_id: parseInt(commentId),
+    });
+    comment = data;
+  }
+
   return {
     ...context,
     eventName: process.env.GITHUB_EVENT_NAME || "",
@@ -30,12 +41,14 @@ async function loadDebugContext(): Promise<Context> {
       repo,
     },
     payload: {
+      action: process.env.GITHUB_EVENT_ACTION || "",
       pull_request: {
         ...pull_request,
         number: pull_request.number,
         html_url: pull_request.html_url,
         body: pull_request.body || undefined,
       },
+      comment,
     },
     issue: context.issue,
   };

@@ -1,3 +1,5 @@
+import { ReviewComment, ReviewCommentThread } from "./comments";
+
 export type File = {
   filename: string;
   status:
@@ -16,29 +18,15 @@ export type Hunk = {
   startLine: number;
   endLine: number;
   diff: string;
-  commentChains?: {
-    comments: ReviewComment[];
-  }[];
+  commentThreads?: ReviewCommentThread[];
 };
 
 export type FileDiff = File & {
   hunks: Hunk[];
 };
-
-type ReviewComment = {
-  path: string;
-  body: string;
-  line?: number;
-  in_reply_to_id?: number;
-  id: number;
-  start_line?: number | null;
-  user: {
-    login: string;
-  };
-};
 export function parseFileDiff(
   file: File,
-  reviewComments: ReviewComment[]
+  prCommentThreads: ReviewCommentThread[]
 ): FileDiff {
   if (!file.patch) {
     return {
@@ -75,7 +63,7 @@ export function parseFileDiff(
   hunks = hunks.map((hunk) => {
     return {
       ...hunk,
-      commentChains: generateCommentChains(file, hunk, reviewComments),
+      commentThreads: filterDiffHunkThreads(file, hunk, prCommentThreads),
     };
   });
 
@@ -83,35 +71,6 @@ export function parseFileDiff(
     ...file,
     hunks,
   };
-}
-
-function generateCommentChains(
-  file: File,
-  hunk: Hunk,
-  reviewComments: ReviewComment[]
-): { comments: ReviewComment[] }[] {
-  const topLevelComments = reviewComments.filter(
-    (c) =>
-      !c.in_reply_to_id &&
-      c.path === file.filename &&
-      c.body.length &&
-      c.line &&
-      c.line <= hunk.endLine &&
-      c.line >= hunk.startLine &&
-      (!c.start_line ||
-        (c.start_line <= hunk.endLine && c.start_line >= hunk.startLine))
-  );
-
-  return topLevelComments.map((topLevelComment) => {
-    return {
-      comments: [
-        topLevelComment,
-        ...reviewComments.filter(
-          (c) => c.in_reply_to_id === topLevelComment.id
-        ),
-      ],
-    };
-  });
 }
 
 function removeDeletedLines(hunk: Hunk): Hunk {
@@ -205,8 +164,8 @@ function formatDiffHunk(hunk: Hunk): string {
     output += `__old hunk__\n${oldContent}\n`;
   }
 
-  if (hunk.commentChains?.length) {
-    output += `__existing_comment_thread__\n${hunk.commentChains
+  if (hunk.commentThreads?.length) {
+    output += `__existing_comment_thread__\n${hunk.commentThreads
       .map((c) =>
         c.comments.map((c) => `@${c.user.login}: ${c.body}`).join("\n")
       )
@@ -250,4 +209,26 @@ export function generateFileCodeDiff(fileDiff: FileDiff): string {
   console.log(header);
 
   return header;
+}
+
+function filterDiffHunkThreads(
+  file: File,
+  hunk: Hunk,
+  prCommentThreads: ReviewCommentThread[]
+): ReviewCommentThread[] {
+  return prCommentThreads.filter((t) => {
+    const c = t.comments[0];
+    return (
+      c &&
+      t.file === file.filename &&
+      !c.in_reply_to_id &&
+      c.path === file.filename &&
+      c.body.length &&
+      c.line &&
+      c.line <= hunk.endLine &&
+      c.line >= hunk.startLine &&
+      (!c.start_line ||
+        (c.start_line <= hunk.endLine && c.start_line >= hunk.startLine))
+    );
+  });
 }
