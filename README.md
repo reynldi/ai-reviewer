@@ -1,18 +1,26 @@
-# Presubmit - AI Code Reviewer
+<div align="center">
+  <h1>
+    Presubmit - AI Code Reviewer
+  </h1>
+  
+  <p><em>Context-aware, intelligent and instant PR reviews</em></p>
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/presubmit/ai-reviewer)](https://github.com/presubmit/ai-reviewer/commits)
 [![GitHub Stars](https://img.shields.io/github/stars/presubmit/ai-reviewer?style=social)](https://github.com/presubmit/ai-reviewer/stargazers)
 [![GitHub License](https://img.shields.io/github/license/presubmit/ai-reviewer?color=yellow)](https://github.com/presubmit/ai-reviewer/blob/main/LICENSE)
 [![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/presubmitai?style=social)](https://x.com/intent/follow?screen_name=presubmitai)
 
+</div>
+
+Transform your code review process with Presubmit's AI Code Reviewer that catches bugs, suggests improvements, and provides meaningful summary - all before human reviewers take their first look.
+
+- 🔍 **Instant, In-depth PR Analysis**: Catches bugs, security issues, and optimization opportunities in real-time
+- 🎯 **Focus on What Matters**: Let AI handle the basics while humans focus on architecture and complex logic
+- ⚡ **Lightning-Fast Setup**: Up and running in 2 minutes with GitHub Actions
+- 💬 **Interactive & Smart**: Responds to questions and generates code suggestions right in your PR
+- ✨ **Title and description generation**: Save time by having the AI generate meaningful title and description for your PR
+
 > 🤝 **Note**: Presubmit is designed to complement human reviewers, not replace them. It helps catch security issues and bugs early on while also providing context about the overall change, making the human review process more efficient.
-
-AI code review assistant that helps teams streamline their review process by providing preliminary feedback on pull requests. It acts as a first-pass reviewer, highlighting potential issues and providing context - empowering human reviewers to focus on architectural decisions and complex logic rather than catching basic issues.
-
-- 📝 **Line-by-Line Review**: Detailed line-by-line comments, catching bugs, suggesting improvements, and explaining complex changes
-- 📊 **Smart Summaries**: Concise summaries of changes that help reviewers understand PR impact
-- 💬 **Interactive**: Responds to questions and requests in PR comments
-- ⚡ **Time-Saving**: Catches bugs early, letting reviewers to focus on more complex design
 
 ![review example](https://github.com/presubmit/ai-reviewer/blob/main/assets/review_example.png?raw=true)
 
