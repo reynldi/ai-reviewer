@@ -1,3 +1,5 @@
+import { getInput } from "@actions/core";
+
 export class Config {
   public llmApiKey: string | undefined;
   public llmModel: string | undefined;
@@ -14,8 +16,8 @@ export class Config {
       throw new Error("LLM_API_KEY is not set");
     }
 
-    this.llmModel = process.env.LLM_MODEL;
-    if (!this.llmModel) {
+    this.llmModel = process.env.LLM_MODEL || getInput("llm_model");
+    if (!this.llmModel?.length) {
       throw new Error("LLM_MODEL is not set");
     }
   }
