@@ -2,7 +2,12 @@ import { info, warning } from "@actions/core";
 import { loadContext } from "./context";
 import config from "./config";
 import { initOctokit } from "./octokit";
-import { getCommentThread, isOwnComment, isThreadRelevant } from "./comments";
+import {
+  buildComment,
+  getCommentThread,
+  isOwnComment,
+  isThreadRelevant,
+} from "./comments";
 import { parseFileDiff } from "./diff";
 import { runReviewCommentPrompt } from "./prompts";
 
@@ -86,7 +91,7 @@ export async function handlePullRequestComment() {
     pull_number: pull_request.number,
     commit_id: pull_request.head.sha,
     path: commentThread.file,
-    body: response.response_comment,
+    body: buildComment(response.response_comment),
     in_reply_to: commentThread.comments[0].id,
   });
 }

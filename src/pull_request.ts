@@ -14,7 +14,7 @@ import {
 import { FileDiff, parseFileDiff } from "./diff";
 import { Octokit } from "@octokit/action";
 import { Context } from "@actions/github/lib/context";
-import { listPullRequestCommentThreads } from "./comments";
+import { buildComment, listPullRequestCommentThreads } from "./comments";
 
 export async function handlePullRequest() {
   const context = await loadContext();
@@ -233,7 +233,7 @@ async function submitReview(
       pull_number: pull_request.number,
       commit_id: pull_request.headSha,
       path: file,
-      body: content,
+      body: buildComment(content),
       line,
     });
   };
@@ -267,7 +267,7 @@ async function submitReview(
   try {
     let commentsData = lineComments.map((c) => ({
       path: c.file,
-      body: c.content,
+      body: buildComment(c.content),
       line: c.end_line,
       side: "RIGHT",
       start_line:
