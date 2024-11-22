@@ -5,14 +5,14 @@
 [![GitHub License](https://img.shields.io/github/license/presubmit/ai-reviewer?color=yellow)](https://github.com/presubmit/ai-reviewer/blob/main/LICENSE)
 [![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/presubmitai?style=social)](https://x.com/intent/follow?screen_name=presubmitai)
 
-> 🤝 **Note**: Presubmit is designed to complement human reviewers, not replace them. It helps catch basic issues early and provides context, making the human review process more efficient and focused on higher-level concerns.
+> 🤝 **Note**: Presubmit is designed to complement human reviewers, not replace them. It helps catch security issues and bugs early on while also providing context about the overall change, making the human review process more efficient.
 
 AI code review assistant that helps teams streamline their review process by providing preliminary feedback on pull requests. It acts as a first-pass reviewer, highlighting potential issues and providing context - empowering human reviewers to focus on architectural decisions and complex logic rather than catching basic issues.
 
-- 📝 **Line-by-Line Review**: Detailed comments on specific code sections, catching bugs, suggesting improvements, and explaining complex changes
-- 📊 **Smart Summaries**: Concise, meaningful summaries of changes that help reviewers quickly understand PR impact
-- 💬 **Interactive Discussions**: Responds to questions and clarifications in PR comments, making reviews more efficient
-- ⚡ **Time-Saving**: Catches common issues early, letting human reviewers focus on what matters most
+- 📝 **Line-by-Line Review**: Detailed line-by-line comments, catching bugs, suggesting improvements, and explaining complex changes
+- 📊 **Smart Summaries**: Concise summaries of changes that help reviewers understand PR impact
+- 💬 **Interactive**: Responds to questions and requests in PR comments
+- ⚡ **Time-Saving**: Catches bugs early, letting reviewers to focus on more complex design
 
 ![review example](https://github.com/presubmit/ai-reviewer/blob/main/assets/review_example.png?raw=true)
 
