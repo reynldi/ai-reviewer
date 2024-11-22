@@ -28,13 +28,17 @@ Optimize your code review process with Presubmit's AI Code Reviewer that catches
 
 <br/>
 
-## Example
+## See it in Action
 
-See example [Pull Request review](https://github.com/presubmit/ebank-backend/pull/13).
+> 💡 [View full example PR review](https://github.com/presubmit/ebank-backend/pull/13)
 
-<br />
+<div align="center">
+  <a href="https://github.com/presubmit/ebank-backend/pull/13">
+    <img src="https://github.com/presubmit/ai-reviewer/blob/main/assets/review_example_3.png?raw=true" alt="AI Code Review example" width="800"/>
+  </a>
+</div>
 
-![AI Code Review example](https://github.com/presubmit/ai-reviewer/blob/main/assets/review_example_3.png?raw=true)
+<br/>
 
 ## Usage
 
@@ -82,6 +86,8 @@ The action requires:
 - `GITHUB_TOKEN`: Automatically provided by GitHub Actions
 - `LLM_API_KEY`: Your API key (added in step 1)
 - `LLM_MODEL`: Which LLM model to use. Make sure the model is [supported](https://github.com/presubmit/ai-reviewer/blob/main/src/ai.ts) and matches the `LLM_API_KEY`.
+
+<br/>
 
 ## Features
 
