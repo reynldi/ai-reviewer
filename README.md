@@ -18,9 +18,9 @@ Optimize your code review process with Presubmit's AI Code Reviewer that catches
 
 - 🔍 **Instant, In-depth PR Analysis**: Catches bugs, security issues, and optimization opportunities in real-time
 - 🎯 **Focus on What Matters**: Let AI handle the basics while humans focus on architecture and complex logic
-- ⚡ **Lightning-Fast Setup**: Up and running in 2 minutes with GitHub Actions
-- 💬 **Interactive & Smart**: Responds to questions and generates code suggestions right in your PR
 - ✨ **Title and description generation**: Save time by having the AI generate meaningful title and description for your PR
+- 💬 **Interactive & Smart**: Responds to questions and generates code suggestions right in your PR
+- ⚡ **Lightning-Fast Setup**: Up and running in 2 minutes with GitHub Actions
 
 <br/>
 
@@ -28,7 +28,13 @@ Optimize your code review process with Presubmit's AI Code Reviewer that catches
 
 <br/>
 
-![review example](https://github.com/presubmit/ai-reviewer/blob/main/assets/review_example.png?raw=true)
+## Example
+
+See example [Pull Request review](https://github.com/presubmit/ebank-backend/pull/13).
+
+<br />
+
+![AI Code Review example](https://github.com/presubmit/ai-reviewer/blob/main/assets/review_example-2.png?raw=true)
 
 ## Usage
 
@@ -88,19 +94,28 @@ The action requires:
 
 ### 🛡️ Security & Quality
 
-- **Vulnerability Detection**: Catches security issues and leaked secrets
-- **Best Practices**: Enforces coding standards and security guidelines
+- **Vulnerability Detection**: Catches security issues and leaked
+  secrets
+- **Best Practices**: Enforces coding standards and security
+  guidelines
 - **Performance**: Identifies potential bottlenecks and optimizations
 - **Documentation**: Ensures proper code documentation and clarity
 
-### ⚡ Developer Experience
+### ⚙️ Configurable
 
-- **2-Minute Setup**: Quick integration with GitHub Actions
-- **Smart PR Titles**: Auto-generates descriptive and meaningful titles
-- **Real-time**: Instant feedback on your pull requests
-- **24/7 Available**: Round-the-clock code reviews
+- Mention `@presubmit` in PR title for auto-generation
+- Disable reviews with `@presubmit ignore` comment
+- Configurable review depth and focus areas
+- Customizable rules and preferences
 
-_Production-ready, secure, and ready to review your code!_ 🚀
+### ⚡ Seamless Integration
+
+- 2-minute setup with GitHub Actions
+- Works with all major LLM providers (Claude, GPT-4, Gemini)
+- Instant feedback on every PR
+- Zero maintenance required
+
+<br/>
 
 ## Show Your Support! ⭐
 
