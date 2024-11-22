@@ -34,7 +34,7 @@ See example [Pull Request review](https://github.com/presubmit/ebank-backend/pul
 
 <br />
 
-![AI Code Review example](https://github.com/presubmit/ai-reviewer/blob/main/assets/review_example_2.png?raw=true)
+![AI Code Review example](https://github.com/presubmit/ai-reviewer/blob/main/assets/review_example_3.png?raw=true)
 
 ## Usage
 
