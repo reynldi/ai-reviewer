@@ -36,7 +36,7 @@ Automated analysis detects potential issues and provides actionable insights:
 
 <div align="left">
   <a href="https://github.com/presubmit/ebank-backend/pull/13">
-    <img src="https://github.com/presubmit/ai-reviewer/blob/main/assets/review_example_3.png?raw=true" alt="AI Code Review example" width="600"/>
+    <img src="https://github.com/presubmit/ai-reviewer/blob/main/assets/review_example_3.png?raw=true" alt="AI Code Review example" width="800"/>
   </a>
 </div>
 
@@ -46,7 +46,7 @@ Interactive discussions help clarify implementation details:
 
 <div align="left">
   <a href="https://github.com/presubmit/ebank-backend/pull/13">
-    <img src="https://github.com/presubmit/ai-reviewer/blob/main/assets/comment_example.png?raw=true" alt="AI comment thread example" width="600"/>
+    <img src="https://github.com/presubmit/ai-reviewer/blob/main/assets/comment_example.png?raw=true" alt="AI comment thread example" width="800"/>
   </a>
 </div>
 
