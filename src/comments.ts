@@ -95,3 +95,7 @@ function generateCommentThreads(
 export function isOwnComment(comment: string): boolean {
   return comment.includes(COMMENT_SIGNATURE);
 }
+
+export function buildComment(comment: string): string {
+  return comment + "\n\n" + COMMENT_SIGNATURE;
+}
