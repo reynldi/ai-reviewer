@@ -12,7 +12,9 @@
 
 </div>
 
-Transform your code review process with Presubmit's AI Code Reviewer that catches bugs, suggests improvements, and provides meaningful summary - all before human reviewers take their first look.
+<br/>
+
+Optimize your code review process with Presubmit's AI Code Reviewer that catches bugs, suggests improvements, and provides meaningful summary - all before human reviewers take their first look.
 
 - 🔍 **Instant, In-depth PR Analysis**: Catches bugs, security issues, and optimization opportunities in real-time
 - 🎯 **Focus on What Matters**: Let AI handle the basics while humans focus on architecture and complex logic
@@ -20,7 +22,11 @@ Transform your code review process with Presubmit's AI Code Reviewer that catche
 - 💬 **Interactive & Smart**: Responds to questions and generates code suggestions right in your PR
 - ✨ **Title and description generation**: Save time by having the AI generate meaningful title and description for your PR
 
+<br/>
+
 > 🤝 **Note**: Presubmit is designed to complement human reviewers, not replace them. It helps catch security issues and bugs early on while also providing context about the overall change, making the human review process more efficient.
+
+<br/>
 
 ![review example](https://github.com/presubmit/ai-reviewer/blob/main/assets/review_example.png?raw=true)
 
