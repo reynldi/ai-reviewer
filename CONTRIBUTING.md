@@ -1,6 +1,6 @@
-# Contributing to AI PR Reviewer
+# Contributing
 
-Thank you for your interest in contributing to AI PR Reviewer! This document provides guidelines and instructions for contributing to the project.
+Thank you for your interest in contributing to Presubmit AI Reviewer!
 
 ## Getting Started
 
