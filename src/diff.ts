@@ -1,4 +1,4 @@
-import { ReviewComment, ReviewCommentThread } from "./comments";
+import { ReviewCommentThread } from "./comments";
 
 export type File = {
   filename: string;
