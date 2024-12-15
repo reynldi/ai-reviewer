@@ -85,6 +85,12 @@ on:
 jobs:
   review:
     runs-on: ubuntu-latest
+      - name: Check required secrets
+        run: |
+          if [ -z "${{ secrets.LLM_API_KEY }}" ]; then
+            echo "Error: LLM_API_KEY secret is not configured"
+            exit 1
+          fi
     steps:
       - uses: presubmit/ai-reviewer@latest
         env:
