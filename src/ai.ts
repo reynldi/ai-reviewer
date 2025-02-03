@@ -1,10 +1,10 @@
-import { generateObject } from "ai";
-import { createAnthropic } from "@ai-sdk/anthropic";
-import { createOpenAI } from "@ai-sdk/openai";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { z } from "zod";
-import { info } from "@actions/core";
 import config from "./config";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createOpenAI } from "@ai-sdk/openai";
+import { generateObject } from "ai";
+import { info } from "@actions/core";
+import { z } from "zod";
 
 const LLM_MODELS = [
   // Anthropic
@@ -19,6 +19,10 @@ const LLM_MODELS = [
   // OpenAI
   {
     name: "gpt-4o-mini",
+    createAi: createOpenAI,
+  },
+  {
+    name: "o3-mini",
     createAi: createOpenAI,
   },
   // Google
