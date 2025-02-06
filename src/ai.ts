@@ -25,13 +25,38 @@ const LLM_MODELS = [
     name: "o3-mini",
     createAi: createOpenAI,
   },
-  // Google
+  // Google stable models https://ai.google.dev/gemini-api/docs/models/gemini
+  {
+    name: "gemini-2.0-flash-001",
+    createAi: createGoogleGenerativeAI,
+  },
+  {
+    name: "gemini-2.0-flash-lite-preview-02-05",
+    createAi: createGoogleGenerativeAI,
+  },
   {
     name: "gemini-1.5-flash",
     createAi: createGoogleGenerativeAI,
   },
   {
     name: "gemini-1.5-flash-latest",
+    createAi: createGoogleGenerativeAI,
+  },
+  {
+    name: "gemini-1.5-flash-8b",
+    createAi: createGoogleGenerativeAI,
+  },
+  {
+    name: "gemini-1.5-pro",
+    createAi: createGoogleGenerativeAI,
+  },
+  // Google experimental models https://ai.google.dev/gemini-api/docs/models/experimental-models
+  {
+    name: "gemini-2.0-pro-exp-02-05",
+    createAi: createGoogleGenerativeAI,
+  },
+  {
+    name: "gemini-2.0-flash-thinking-exp-01-21",
     createAi: createGoogleGenerativeAI,
   },
 ];
