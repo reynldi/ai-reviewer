@@ -22,6 +22,14 @@ const LLM_MODELS = [
     createAi: createOpenAI,
   },
   {
+    name: "o1",
+    createAi: createOpenAI,
+  },
+  {
+    name: "o1-mini",
+    createAi: createOpenAI,
+  },
+  {
     name: "o3-mini",
     createAi: createOpenAI,
   },
