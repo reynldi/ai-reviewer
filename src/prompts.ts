@@ -2,7 +2,7 @@ import { runPrompt } from "./ai";
 import { z } from "zod";
 import { formatFileDiff, File, FileDiff, generateFileCodeDiff } from "./diff";
 import { ReviewCommentThread } from "./comments";
-import { readAdditionalContextFiles } from "./additional_context";
+import config from "./config";
 
 type PullRequestSummaryPrompt = {
   prTitle: string;
@@ -142,10 +142,6 @@ export async function runReviewPrompt(
   pr: PullRequestReviewPrompt
 ): Promise<PullRequestReview> {
 
-  // Load additional review guide files if provided
-  const reviewGuide = await readAdditionalContextFiles(
-    process.env.REVIEW_GUIDE_FILES?.split(",") || []
-  );
 
   let systemPrompt = `
 <IMPORTANT INSTRUCTIONS>
@@ -194,8 +190,10 @@ __new hunk__
 - If you cannot find any actionable comments, return an empty array.
 - VERY IMPORTANT: Keep in mind you're only seeing part of the code, and the code might be incomplete. Do not make assumptions about the code outside the diff.
 
-Guidelines for the review, such as style guides, conventions, or best practices, violating the following guidelines should result in a critical comment:
-${reviewGuide.join("\n\n")}
+${config.styleGuideRules && config.styleGuideRules.length > 0
+      ? `Guidelines for the review, such as style guides, conventions, or best practices, violating the following guidelines should result in a critical comment:
+${config.styleGuideRules}`
+      : ''}
 </IMPORTANT INSTRUCTIONS>
 
 <EXAMPLE>
