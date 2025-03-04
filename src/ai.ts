@@ -16,6 +16,10 @@ const LLM_MODELS = [
     name: "claude-3-5-sonnet-20241022",
     createAi: createAnthropic,
   },
+  {
+    name: "claude-3-7-sonnet-20250219",
+    createAi: createAnthropic,
+  },
   // OpenAI
   {
     name: "gpt-4o-mini",
