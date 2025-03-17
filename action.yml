@@ -1,9 +1,10 @@
-name: "AI Code Reviewer for Pull Requests"
-description: "Review, summarize and auto-fix pull requests with AI"
+name: "Presubmit - AI Code Review & Fixes"
+description: "AI-powered code reviews that detect issues, provide summaries, and suggest auto-fixes on PRs."
 author: "Presubmit.ai"
 branding:
   icon: "check-square"
   color: "black"
+  tags: "ai,code-review,ai-assisted,automation,pull-requests,linting,ci,autofix,devtools"
 
 runs:
   using: "node20"
