@@ -86,7 +86,7 @@ export async function handlePullRequestComment() {
   }
 
   info("action requested, submitting response");
-  await octokit.pulls.createReviewComment({
+  await octokit.rest.pulls.createReviewComment({
     ...context.repo,
     pull_number: pull_request.number,
     commit_id: pull_request.head.sha,
