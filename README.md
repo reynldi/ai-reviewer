@@ -78,7 +78,8 @@ permissions:
   issues: write
 
 on:
-  pull_request:
+  pull_request_target:
+    types: [opened, synchronize]
   pull_request_review_comment:
     types: [created]
 
